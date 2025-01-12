@@ -1,0 +1,29 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+p {
+    position: relative;
+    z-index: 2;
+    margin: 10px;
+}
+
+form {
+    position: relative;
+    z-index: 2;
+    margin: 10px;
+}
+
+button {
+    width: 10em;
+    height: 5em;
+    margin: 1em;
+    color: black;
+}
+
+h1 {
+    position: relative;
+    z-index: 2;
+    margin: 10px;
+}

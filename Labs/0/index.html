@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Lab 0</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <p>How many buttons to create?</p>
+    <form onsubmit="createButtons(document.getElementById('buttonInput').value); return false;">
+        <input type="text" pattern="[3-7]" id="buttonInput" required>
+        <input type="submit" id="startGame" value="Go!">
+    </form>
+    <script src="js/script.js"></script>
+    <script src="lang/messages/en/user.js"></script>
+</body>
+</html>
