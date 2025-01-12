@@ -26,6 +26,7 @@ class Button {
         document.body.appendChild(this.btn);
     }
 
+    //ChatGPT used for this function
     moveToRandomLocation() {
         this.btn.style.position = abs;
         const windowWidth = window.innerWidth;
@@ -63,6 +64,7 @@ class ButtonManager {
         setTimeout(() => this.scrambleButtons(numButtons), numButtons * oneSecond - twoSeconds);
     }
 
+    //ChatGPT used for this function
     getColor() {
         const availableColors = colors.filter(color => !this.usedColors.includes(color));
         const randomIndex = Math.floor(Math.random() * availableColors.length);
@@ -154,7 +156,7 @@ class Game {
 
 const game = new Game();
 
-document.getElementById(startButtonID).onclick = () => {
+function startButton() {
     const numButtons = parseInt(document.getElementById(textInput).value, baseTen);
     game.start(numButtons);
 };
