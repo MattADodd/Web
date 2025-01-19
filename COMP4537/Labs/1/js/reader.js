@@ -1,58 +1,69 @@
 let notes = [];
-const storage = window.localStorage;
-const notesDiv = document.getElementById("notes");
-const timestampDiv = document.getElementById("time");
+const STORAGE = window.localStorage;
+const NOTESDIV = document.getElementById("notes");
+const TIMESTAMPDIV = document.getElementsByClassName("time")[0];
+
+document.getElementById("backLink").innerHTML = BACK;
 
 window.onload = () => {
+    if (typeof (Storage) == "undefined") {
+        document.write(NOTSUPPORTED);
+        window.stop();
+    }
     loadNotes();
+    updateTimestamp();
     setInterval(loadNotes, 2000);
     setInterval(updateTimestamp, 2000);
 };
 
 class Note {
     constructor(content = "") {
+        this.content = content; 
         this.text = document.createElement("p");
         this.break = document.createElement("br");
         this.text.innerText = content;
-        notesDiv.appendChild(this.text);
-        notesDiv.appendChild(this.break);
+        NOTESDIV.appendChild(this.text);
+        NOTESDIV.appendChild(this.break);
     }
 
     remove() {
-        notesDiv.removeChild(this.text);
-        notesDiv.removeChild(this.break);
+        this.text.remove();
+        this.break.remove();
+
+        const index = notes.findIndex(note => note.content === this.content);
+        if (index !== -1) {
+            notes.splice(index, 1); 
+        }
     }
 }
 
 function loadNotes() {
-    const savedNotes = storage.getItem("notes");
+    const savedNotes = STORAGE.getItem("notes");
     if (savedNotes) {
-        const savedNotesArray = JSON.parse(savedNotes);
-
-        // Remove notes not in savedNotesArray
-        notes.forEach(note => {
-            if (!savedNotesArray.includes(note.text.value)) {
-                note.remove();
+        const savedNotesArray = JSON.parse(savedNotes); 
+        let i = 0;
+        while ( i < notes.length) {
+            if (notes && notes[i].text.innerText != savedNotesArray[i]) {
+                notes[i].remove();
+            } else {
+                i++;
             }
-        });
+        }
 
-        // Add new notes from savedNotesArray if they are not in notes
-        savedNotesArray.forEach(savedNote => {
-            const exists = notes.some(note => note.text.value === savedNote);
-            if (!exists) {
-                add(savedNote);
-            }
-        });
+        for (let i = notes.length; i < savedNotesArray.length; i++) {
+            add(savedNotesArray[i]);
+        }
+    } else {
+        notes.forEach(note => note.remove());
     }
 }
 
-
 function add(content = "") {
     const note = new Note(content);
-    notes.push(note);
+    notes.push(note); 
 }
 
 function updateTimestamp() {
     const now = new Date();
-    timestampDiv.innerText = `Last saved at: ${now.toLocaleTimeString()}`;
-};
+    TIMESTAMPDIV.innerText = SAVE + now.toLocaleTimeString();
+}
